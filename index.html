@@ -1,50 +1,317 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja" dir="ltr">
-<head profile="http://purl.org/net/ns/metaprof">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>TubeChat</title>
-<meta name="robots" content="INDEX,FOLLOW" />
-<meta name="keywords" content="キーワード,テンプレート,ネットマニア" lang="ja" xml:lang="ja" />
-<meta name="description" content="ネットマニアテンプレート" lang="ja" xml:lang="ja" />
-<meta http-equiv="content-style-type" content="text/css" />
-<meta http-equiv="content-script-type" content="text/javascript" />
-<meta http-equiv="content-language" content="ja" />
-<link rev="made" href="mailto:netmania@hogehogehoge.com" />
-<meta name="author" content="author" />
-<link rel="start" type="text/html" href="/index.html" />
-<meta name="copyright" content="Netmania All rights reserved." />
-<link rel="stylesheet" href="style.css" type="text/css" />
-<link rel="alternate" type="application/atom+xml" title="Atom" href="atom.xml" />
-<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="index.xml" />
-</head>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>HIKAKIN MANIA自己満己チャット</title>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<!-- <script src="{{ url_for('static', filename='SCP/jquery.simple-color-picker.js') }}"></script> -->
+		<style>
 
-<body>
 
-<div id="out">
-	<div id="head">
+html {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	text-align: center;
+	color: #5D5D5D;
+	width: 80;
+	font-family: Verdana, Arial, "ヒラギノ角ゴ Pro W3", "ＭＳ Ｐゴシック", sans-serif;
+}
+
+
+p {
+	line-height: 1.9;
+	text-align: justify;
+	text-justify: distribute;
+}
+
+
+p, ul, ol, dl, table, pre {
+	font-size: 100%;
+	letter-spacing: 0.02em;
+}
+
+a
+{
+	color: #008080;
+	text-decoration: none;
+}
+
+#chat
+{
+	background-color: #eeeeee;
+	border: #333333 2px solid;
+	border-radius: 2px;
+	list-style: none;
+	padding: 10px;
+	height: 75%;
+	overflow: auto;
+}
+
+#clist
+{
+	overflow-y: auto;
+}
+
+li:hover
+{
+	background-color: gray;
+	border-radius: 5px;
+}
+
+li:nth-child(even)
+{
+	background: #CCCCCC;
+	padding-left: 3px;
+	border-radius: 5px;
+}
+
+li:nth-child(even):hover
+{
+	background: gray;
+	border-radius: 5px;
+}
 	
-	<h1>TubeChat</h1>
-	<h2>大物Youtuberの動画を見ながらチャット</h2>
-	</div>
+
+#send
+{
+	width: 35%;
+	box-shadow: 0px 0px 0px rgba(0,0,0,0.4);
+	border: solid 3px #008080;
+	border-radius: 22px;
+	padding: 8px;
+	float: left;
+}
 
 
-	<div id="main">
-	<div id="menu"><a href="/index.html">なんでもチャンネル</a> | <a href="/index.html">HIKAKINチャンネル</a> | <a href="/index.html">きゃねぽよチャンネル</a> | <a href="/index.html">ALEX IS ALWAYS WATCHING YOU</a></div>
+#douga
+{
+	width: 57%;
+	box-shadow: 0px 0px 0px rgba(0,0,0,0.4);
+	border: solid 3px #008080;
+	border-radius: 22px;
+	padding: 8px;
+	margin-left: auto;
+}
 
-<h3>このサイトについて</h3>
-<p>みんなで動画を再生しながらチャットするためのサービスです。</p>
-<p>一定のチャンネルではサイト管理人のおすすめ動画がワンボタンで再生できます。</p>
+/* ----------------------------------------------------------------------- */
+/* フォーカスした時の入力欄の色の変更 */
+.chB {
+	animation-name: changeB;
+	animation-duration: 500ms;
+	animation-timing-function: ease;
+	animation-fill-mode: both;
+}
 
-<h3>利用できる動画サイト</h3>
-videoタグに対応してる動画サイトの動画が使えます。
+.baB {
+	animation-name: backB;
+	animation-duration: 300ms;
+	animation-timing-function: ease;
+	animation-fill-mode: both;
+}
+
+@keyframes changeB {
+	0% {
+		border: solid 1px gray;
+		border-radius: 5px;
+	}
+	100% {
+		border: solid 3px #008080;
+		border-radius: 5px;
+	}
+}
+
+@keyframes backB {
+	0% {
+		border: solid 3px #008080;
+	}
+	100% {
+		border: solid 1px gray;
+	}
+}
+
+/* ----------------------------------------------------------------------- */
+/* 送った時のボーダーの変更 */
+.seB {
+	animation-name: sendB;
+	animation-duration: 1200ms;
+	animation-timing-function: ease;
+	animation-fill-mode: forwards;
+}
+
+.seBB {
+	animation-name: sendBackB;
+	animation-duration: 600ms;
+	animation-timing-function: ease;
+	animation-fill-mode: forwards;
+}
+
+@keyframes sendB {
+	0% {
+		border-color: #008080;
+	}
+	50% {
+		border-color: #00ffff;
+	}
+	100% {
+		border-color: #008080;
+	}
+	
+}
+
+@keyframes sendBackB {
+	0% {
+		border-color: #00e673;
+	}
+	100% {
+		border-color: #008080;
+	}
+}
+
+/* ----------------------------------------------------------------------- */
+/* メッセージが来たときのアニメーション */
+.msgP
+{
+	animation-name: msgpop;
+	animation-duration: 1000ms;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease;
+}
+
+@keyframes msgpop {
+	0% {
+		opacity: 0;
+		height: 0;
+	}
+	100% {
+		opacity: 1;
+		height: 100%
+	}
+}
+	
+		</style>
+		<script><!-- main scripts -->
+		
+//ブラウザ画面のサイズの変更を検知してチャット画面を変更（合わせる）
+window.onresize = function(){
+	$("#chat").css("max-height", window.innerHeight * 0.6);
+	
+}
 
 
+window.onload = function () {
+	const ws = new WebSocket('ws://'+ location.host +'/ws');
+	$("#chat").css("max-height", window.innerHeight * 0.6); //ウィンドウサイズをディスプレイに合わせるやつ
 
-<div id="footer">
-Copyright &copy;きゃねぽよ All Rights Reserved.
-</div><!-- footer -->
+	const textbox = document.getElementById('textbox');
+	const username = document.getElementById('name');
+	const usrcolor = document.getElementById('color');
 
-</div>
+	const chat = document.getElementById('chat');
 
-</body></html>
+	//メッセージの受け取り
+	ws.onmessage = function (e) {
+		const li = document.createElement('li');
+		console.log(e.data);
+		//メッセージを名前と分裂するために : 区別する
+		var Mn = e.data.split("&&")[0]; //MessageName
+		var Mm = e.data.split("&&")[1]; //Messageそのもの
+		var Mc = e.data.split("&&")[2]; //色の情報
+		//var Mc = "#000000"; //色の情報
+		
+		if ( Mm.indexOf("http://") != -1 || Mm.indexOf("https://") != -1 ) {
+			if ( Mm.indexOf("https://") != -1 ) {
+				$('#chat').prepend("<a href='https://" + Mm.split("https://")[1] + "' target='_blank'><li><b style='color:" + Mc + "; border-color:" + Mc + "'>" + Mn + "</b> : " + Mm + '<p style="margin:0; text-align:right;">' + fulltime + '</p></li></a>');
+			
+			} else {
+				$('#chat').prepend("<a href='http://" + Mm.split("http://")[1] + "' target='_blank'><li><b style='color:" + Mc + "; border-color:" + Mc + "'>" + Mn + "</b> : " + Mm + '<p style="margin:0; text-align:right;">' + fulltime + '</p></li></a>');
+				
+			}
+		
+		} else { //標準送信
+			$('#chat').prepend("<li style='opacity:0;'><b style='color:" + Mc + "'>" + Mn + "</b> : " + Mm + '<p style="margin:0; text-align:right;">' + fulltime + '</p></li>');
+			//$('li')[0].addClass("msgP");
+			$('#chat li:first-child').addClass("msgP")
+			
+		}
+		
+	};
+	
+	//メッセージの送信部分（キー押したら発動）
+	textbox.addEventListener('keypress', function (e) {
+		if ( e.keyCode == 13 ) {
+			if ( textbox.value == "\n" || textbox.value == "" ) {
+				textbox.value = "";
+				return;
+				
+			}
+				
+			var msg = username.value + "&&" + textbox.value + "&&" + usrcolor.value;
+			ws.send(msg);
+			$("#send").addClass("seB");
+			setTimeout(function() {$("#send").removeClass("seB")}, 1200);
+			$("#send").removeClass("rek");
+			textbox.value = "";
+			
+		}
+		
+	});
+	jikan();
+	
+	//ホバーで影をつけるやつ
+	$("#send")
+		.mouseover(function (e) {
+			$("#textbox").focus();
+			$(this).removeClass("rek");
+			$(this).addClass("adk");
+			
+	})
+		.mouseout(function (e) {
+			$(this).removeClass("adk");
+			$(this).addClass("rek");
+			
+	});
+	$('ul').prepend('<li class="msgP">' + "<b> -- チャットへ参加しました -- </b>" + '<p style="float:right; margin-top:0px; text-align:right">' + fulltime + '</p></li>');
+	
+	//フォーカスで淵を変えるやつ
+	
+	$('#color').simpleColorPicker(); //カラーピッカーの有効化
+	$("#color").on("blur", function () { //カラーピッカーで色を変えたときにぼーだーの色を変える
+		$("#color").css("border-color", $("#color")[0].value);
+		$("#color").css("border-width", "1px");
+		
+	});
+	
+}
+
+var fulltime = 0;
+
+//時間を計測、表示するだけの関数
+function jikan() {
+	var time = new Date();
+	var h = time.getHours(); if ( h < 10 ) h = "0" + h;
+	var m = time.getMinutes(); if ( m < 10 ) m = "0" + m;
+	var s = time.getSeconds(); if ( s < 10 ) s = "0" + s;
+	fulltime = h + ":" + m + ":" + s;
+	$('#jikan')[0].innerText = fulltime;
+	setTimeout(jikan, 1000);
+	
+}
+
+		</script>
+	</head>
+	<body>
+		<p id="jikan" style="color:#008080; float:right; font-size:15px;"></p>
+		<p style="border-bottom:3px solid #008080; font-size:24px; text-align:left;">HIKAKIN MANIA自己満己チャット</p>
+		<div id="send">
+			<p style="font-size:13px">名前</p>
+			<input type="txt" style="width:70px" id="name" value="名無し" maxlength="8"><br><br>
+			<input type="txt" style="width:90%; padding: 5px;" id="textbox">
+		</div>
+		<div id="douga">sex</div>
+			<div id="clist"><ul id="chat"></ul></div>
+			<p style="font-size:20px;  position:absolute; padding:0px; bottom:0.1px; right:5px;">Made by <a href="static/profile.html" style="text-shadow: 1px 2px 3px #000000; color: rgb(255, 238, 0);">Kyanepoyo</a></p>
+	</body>
+</html>
